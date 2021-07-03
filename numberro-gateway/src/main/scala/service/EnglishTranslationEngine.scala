@@ -33,20 +33,27 @@ object EnglishTranslationEngine {
         tokenize(tail, iteration + 1, (entry -> interpret_LT_Thousand(head)) :: result)
     }
 
-  def interpret_LT_Thousand(group: String): String = group.length match {
-    case 1 => dictionary("single")(group.toInt) // from 0 to 9
-    case 2 =>
-      val num = group.toInt;
-      if (num < 20) dictionary("single")(group.toInt)
-      else dictionary("tens")((num - num % 10) / 10) + " " + interpret_LT_Thousand(group.tail)
-    case 3 =>
-      val head = group.head
-      if (group.head == '0') ""
-      else interpret_LT_Thousand(head.toString) + s" ${pluralize(head, "hundred")} " + interpret_LT_Thousand(group.tail)
+  def interpret_LT_Thousand(group: String, skipZero: Boolean = false): String = {
+    println()
+    group.length match {
+      case 1 =>
+        if (skipZero && group.toInt == 0) "" else dictionary("single")(group.toInt) // from 0 to 9
+      case 2 =>
+        val num = group.toInt;
+        if (num < 20 && num > 0) dictionary("single")(group.toInt)
+        else dictionary("tens")((num - num % 10) / 10) + " " + interpret_LT_Thousand(group.tail, skipZero = true)
+      case 3 =>
+        val head = group.head
+        if (group.head == '0') interpret_LT_Thousand(group.tail)
+        else interpret_LT_Thousand(head.toString) + s" ${pluralize(head, "hundred")} " + interpret_LT_Thousand(group.tail)
 
+    }
   }
 
   def pluralize(num: Char, token: String): String = if (num == '1') token else s"${token}s"
+
+  def pluralizeToken(num: String, token: String): String =
+    if (token.isEmpty || dictionary("single")(1) == num) token else s"${token}s"
 }
 
 
@@ -58,7 +65,7 @@ class EnglishTranslationEngine extends Actor with ActorLogging {
     case (num: Long) =>
       log.info(s"translating... $num")
       val tokens = tokenize(num.toString.reverse.split("(?<=\\G...)").toList.map(_.reverse), 0, List())
-      sender() ! tokens.foldLeft("") { (acc, pair) => acc + " " + pair._1 + " " + pair._2 }
+      sender() ! tokens.foldLeft("") { (acc, pair) => acc + " " + pair._2 + " " + pluralizeToken(pair._2, pair._1) }
   }
 }
 
