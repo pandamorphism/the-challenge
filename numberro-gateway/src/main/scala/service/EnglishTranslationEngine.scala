@@ -65,7 +65,7 @@ class EnglishTranslationEngine extends Actor with ActorLogging {
     case (num: Long) =>
       log.info(s"translating... $num")
       val tokens = tokenize(num.toString.reverse.split("(?<=\\G...)").toList.map(_.reverse), 0, List())
-      sender() ! tokens.foldLeft("") { (acc, pair) => acc + " " + pair._2 + " " + pluralizeToken(pair._2, pair._1) }
+      sender() ! (tokens.foldLeft("") { (acc, pair) => acc + " " + pair._2 + " " + pluralizeToken(pair._2, pair._1) }).trim
   }
 }
 
