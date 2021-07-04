@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {allHistory$, currentInterpretation$, FeatureState} from '../../state/reducers';
-import {retrieveHistory, retrieveInterpretation} from '../../state/actions';
+import {clearCurrentInterpretation, retrieveHistory, retrieveInterpretation} from '../../state/actions';
 
 @Component({
   selector: 'app-page',
@@ -20,7 +20,13 @@ export class PageComponent implements OnInit {
     this.store.dispatch(retrieveHistory());
   }
 
-  onSearch(query: { searchNum: number }) {
-    this.store.dispatch(retrieveInterpretation({number: query.searchNum}));
+  onSearch(query: { searchNum: string }) {
+    this.store.dispatch(
+      this.ensureDigitsOnly(query?.searchNum.trim()) ?
+        retrieveInterpretation({number: query.searchNum.trim()}) : clearCurrentInterpretation());
+  }
+
+  private ensureDigitsOnly(searchNum: string | undefined) {
+    return searchNum && /^\d+$/.test(searchNum);
   }
 }

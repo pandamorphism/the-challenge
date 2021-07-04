@@ -1,9 +1,9 @@
 <app-search-form class="search" (search)="onSearch($event)" [interpretationEvent]="currentInterpretation$ | async"></app-search-form>
 <mat-accordion>
-  <mat-expansion-panel hideToggle>
+  <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Interpretation History   <mat-icon>keyboard_arrow_down</mat-icon>
+        Interpretation History
       </mat-panel-title>
     </mat-expansion-panel-header>
     <app-search-history [eventsHistory]="eventsHistory$ | async"></app-search-history>

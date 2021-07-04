@@ -17,8 +17,8 @@ export class InterpreterService {
   }
 
   // todo: handle case with Real numbers
-  getInterpretation(num: number) {
-    const params = new HttpParams().set("number", num)
+  getInterpretation(num: string) {
+    const params = new HttpParams().set('number', num);
     return this.httpClient.get<InterpretedEvent>(`${this.domainPath}`, {params});
   }
 }

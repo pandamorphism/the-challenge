@@ -19,6 +19,7 @@ const interpretedEventReducer = createReducer(initialState,
   on(NumberInterpreterActions.retrieveHistorySuccess, (state, {history}) => adapter.setMany(history, state)),
   on(NumberInterpreterActions.retrieveInterpretationSuccess, (state, {event}) =>
     adapter.upsertOne(event, {...state, currentInterpretation: event})),
+  on(NumberInterpreterActions.clearCurrentInterpretation, (state, _) => ({...state, currentInterpretation: null}))
 );
 
 //selectors
@@ -30,7 +31,7 @@ const {
   selectTotal,
 } = adapter.getSelectors(featureSelector);
 export const allHistory$ = selectAll;
-export const fromLocalHistory$ = (searchCandidate: number) => createSelector(allHistory$, history =>
+export const fromLocalHistory$ = (searchCandidate: string) => createSelector(allHistory$, history =>
   history.find(historyEvent => historyEvent.number === searchCandidate));
 export const currentInterpretation$ = createSelector(featureSelector, state => state.currentInterpretation);
 
