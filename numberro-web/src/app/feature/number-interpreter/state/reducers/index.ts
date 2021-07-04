@@ -30,6 +30,8 @@ const {
   selectTotal,
 } = adapter.getSelectors(featureSelector);
 export const allHistory$ = selectAll;
+export const fromLocalHistory$ = (searchCandidate: number) => createSelector(allHistory$, history =>
+  history.find(historyEvent => historyEvent.number === searchCandidate));
 export const currentInterpretation$ = createSelector(featureSelector, state => state.currentInterpretation);
 
 // public selectors

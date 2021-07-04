@@ -6,12 +6,16 @@ import {
   retrieveInterpretation,
   retrieveInterpretationSuccess
 } from '../actions';
-import {map, switchMap} from 'rxjs/operators';
+import {map, mergeMap, switchMap, take} from 'rxjs/operators';
 import {InterpreterService} from '../../api/interpreter.service';
+import {FeatureState, fromLocalHistory$} from '../reducers';
+import {select, Store} from '@ngrx/store';
+import {of} from 'rxjs';
 
 @Injectable()
 export class Effects {
   constructor(private actions$: Actions,
+              private store: Store<FeatureState>,
               private interpreterService: InterpreterService) {
   }
 
@@ -23,7 +27,11 @@ export class Effects {
 
   fetchInterpretation = createEffect(() => this.actions$.pipe(
     ofType(retrieveInterpretation),
-    switchMap(({number}) => this.interpreterService.getInterpretation(number)),
+    switchMap(({number}) => this.store.pipe(select(fromLocalHistory$(number))).pipe(
+      take(1),
+      mergeMap(found => found ? of(found) : this.interpreterService.getInterpretation(number))
+      )
+    ),
     map(interpretation => retrieveInterpretationSuccess({event: interpretation}))
   ));
 }
