@@ -24,7 +24,7 @@ const interpretedEventReducer = createReducer(initialState,
 
 //selectors
 let featureSelector = createFeatureSelector<FeatureState>(featureKey);
-const {
+export const {
   selectIds,
   selectEntities,
   selectAll,
