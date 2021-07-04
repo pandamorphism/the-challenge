@@ -1,0 +1,23 @@
+@use 'sass:map';
+@use '~@angular/material' as mat;
+.history {
+  max-height: 350px;
+  overflow-y: auto;
+
+  table {
+    border-collapse: collapse;
+    td {
+      padding: 10px 15px;
+      text-align: justify;
+    }
+    th {
+      &.num {
+        width: 350px
+      }
+
+      &.timestamp {
+        width: 250px;
+      }
+    }
+  }
+}

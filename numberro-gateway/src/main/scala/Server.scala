@@ -41,7 +41,7 @@ object Server extends App with InterpretationJsonProtocol with SprayJsonSupport 
 
   val routes: Route = pathPrefix("api" / "interpreter") {
     get {
-      (path(LongNumber) | parameter(Symbol("number").as[Long])) { number =>
+      (parameter(Symbol("number").as[String])) { number =>
         complete(for {
           interpretation <- (translationEngine ? number).mapTo[String]
           storedEvent <- (

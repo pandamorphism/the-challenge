@@ -45,12 +45,10 @@ object EnglishTranslationEngine {
       case 3 =>
         val head = group.head
         if (group.head == '0') interpret_LT_Thousand(group.tail)
-        else interpret_LT_Thousand(head.toString) + s" ${pluralize(head, "hundred")} " + interpret_LT_Thousand(group.tail)
+        else interpret_LT_Thousand(head.toString) + " hundred " + interpret_LT_Thousand(group.tail)
 
     }
   }
-
-  def pluralize(num: Char, token: String): String = if (num == '1') token else s"${token}s"
 
   def pluralizeToken(num: String, token: String): String =
     if (token.isEmpty || dictionary("single")(1) == num) token else s"${token}s"
@@ -62,9 +60,9 @@ class EnglishTranslationEngine extends Actor with ActorLogging {
   import EnglishTranslationEngine._
 
   override def receive: Receive = {
-    case (num: Long) =>
+    case (num: String) =>
       log.info(s"translating... $num")
-      val tokens = tokenize(num.toString.reverse.split("(?<=\\G...)").toList.map(_.reverse), 0, List())
+      val tokens = tokenize(num.reverse.split("(?<=\\G...)").toList.map(_.reverse), 0, List())
       sender() ! (tokens.foldLeft("") { (acc, pair) => acc + " " + pair._2 + " " + pluralizeToken(pair._2, pair._1) }).trim
   }
 }

@@ -9,6 +9,11 @@ import {EffectsModule} from '@ngrx/effects';
 import {Effects} from './state/effects';
 import {StoreModule} from '@ngrx/store';
 import * as fromFeatureReducers from './state/reducers';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatCardModule} from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon';
 
 
 @NgModule({
@@ -27,7 +32,12 @@ import * as fromFeatureReducers from './state/reducers';
       }
     ]),
     EffectsModule.forFeature([Effects]),
-    StoreModule.forFeature(fromFeatureReducers.featureKey, fromFeatureReducers.reducer)
+    StoreModule.forFeature(fromFeatureReducers.featureKey, fromFeatureReducers.reducer),
+    MatFormFieldModule,
+    MatInputModule,
+    MatExpansionModule,
+    MatCardModule,
+    MatIconModule
   ]
 })
 export class NumberInterpreterModule {

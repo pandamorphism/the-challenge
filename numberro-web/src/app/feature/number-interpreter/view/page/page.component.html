@@ -1,3 +1,11 @@
-<p>page works!</p>
-<app-search-form (search)="onSearch($event)" [interpretation]="currentInterpretation$ | async"></app-search-form>
-<app-search-history [eventsHistory]="eventsHistory$ | async"></app-search-history>
+<app-search-form class="search" (search)="onSearch($event)" [interpretationEvent]="currentInterpretation$ | async"></app-search-form>
+<mat-accordion>
+  <mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Interpretation History   <mat-icon>keyboard_arrow_down</mat-icon>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-search-history [eventsHistory]="eventsHistory$ | async"></app-search-history>
+  </mat-expansion-panel>
+</mat-accordion>

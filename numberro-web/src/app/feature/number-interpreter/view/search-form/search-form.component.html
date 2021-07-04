@@ -1,4 +1,12 @@
-<p>search-form works!</p>
 <form [formGroup]="form">
-  <input type="number" formControlName="searchNum"> <span>{{interpretation?.interpretation}}</span>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Number to interpret</mat-label>
+    <input formControlName="searchNum" matInput type="text">
+  </mat-form-field>
+  <mat-card class="results">
+    <mat-card-header>
+      <mat-card-title>Results</mat-card-title>
+    </mat-card-header>
+    {{interpretationEvent?.interpretation}}
+  </mat-card>
 </form>

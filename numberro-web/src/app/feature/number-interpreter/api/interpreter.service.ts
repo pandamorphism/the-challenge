@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {InterpretedEvent} from '../model';
 
@@ -18,6 +18,7 @@ export class InterpreterService {
 
   // todo: handle case with Real numbers
   getInterpretation(num: number) {
-    return this.httpClient.get<InterpretedEvent>(`${this.domainPath}/${num}`);
+    const params = new HttpParams().set("number", num)
+    return this.httpClient.get<InterpretedEvent>(`${this.domainPath}`, {params});
   }
 }

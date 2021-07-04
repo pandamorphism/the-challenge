@@ -14,7 +14,7 @@ export class SearchFormComponent {
   form: FormGroup = this.fb.group({
     searchNum: this.fb.control(null)
   });
-  @Input() interpretation: InterpretedEvent | null = null;
+  @Input() interpretationEvent: InterpretedEvent | null = null;
   @Output() search = this.form.valueChanges.pipe(
     debounceTime(300),
   );
