@@ -1,0 +1,15 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Numberro</span>
+    <span class="spacer"></span>
+    <mat-slide-toggle class="toggle" (toggleChange)="changeMode()"></mat-slide-toggle>
+    <mat-icon *ngIf="mode.tag ==='light';else darkModeIcon">light_mode</mat-icon>
+    <ng-template #darkModeIcon>
+      <mat-icon>dark_mode</mat-icon>
+    </ng-template>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="container mat-drawer-container">
+  <ng-content></ng-content>
+</div>
