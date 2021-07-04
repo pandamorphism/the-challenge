@@ -37,7 +37,7 @@ object Server extends App with InterpretationJsonProtocol with SprayJsonSupport 
 
   val persistentActor = actorSystem.actorOf(Props[NumberroPersistence], "numberro-persistence-actor")
   val translationEngine = actorSystem.actorOf(Props[EnglishTranslationEngine], "interpreter-actor")
-  val port = 8083
+  val port = 8080
 
   val routes: Route = pathPrefix("api" / "interpreter") {
     get {
