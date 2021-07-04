@@ -1,1 +1,23 @@
 <p>search-history works!</p>
+
+<table>
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>User Id</th>
+    <th>Number</th>
+    <th>Interpretation</th>
+    <th>Timestamp</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let event of eventsHistory">
+    <td>{{event.id}}</td>
+    <td>{{event.userId}}</td>
+    <td>{{event.number}}</td>
+    <td>{{event.interpretation}}</td>
+    <td>{{event.timestamp}}</td>
+  </tr>
+  </tbody>
+
+</table>

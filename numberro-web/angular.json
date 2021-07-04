@@ -75,7 +75,8 @@
               "browserTarget": "numberro-web:build:production"
             },
             "development": {
-              "browserTarget": "numberro-web:build:development"
+              "browserTarget": "numberro-web:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

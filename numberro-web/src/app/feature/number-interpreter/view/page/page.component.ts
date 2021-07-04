@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {InterpreterService} from '../../api/interpreter.service';
+import {InterpretedEvent} from '../../model';
+import {Observable, Subject} from 'rxjs';
+import {map, switchMap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-page',
@@ -7,9 +11,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PageComponent implements OnInit {
 
-  constructor() { }
+  eventsHistory = this.interpretService.getHistory();
+  search$: Subject<{ searchNum: number }> = new Subject<{ searchNum: number }>();
+  currentInterpretation$: Observable<InterpretedEvent> = this.search$.pipe(
+    switchMap(({searchNum}) => this.interpretService.getInterpretation(searchNum))
+  );
+
+  constructor(private interpretService: InterpreterService) {
+  }
 
   ngOnInit(): void {
   }
-
 }

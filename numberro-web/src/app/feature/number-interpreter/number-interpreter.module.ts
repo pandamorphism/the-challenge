@@ -4,6 +4,7 @@ import {SearchFormComponent} from './view/search-form/search-form.component';
 import {SearchHistoryComponent} from './view/search-history/search-history.component';
 import {PageComponent} from './view/page/page.component';
 import {RouterModule} from '@angular/router';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import {RouterModule} from '@angular/router';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     RouterModule.forChild([
       {
         path: '',
