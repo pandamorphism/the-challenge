@@ -34,7 +34,6 @@ object EnglishTranslationEngine {
     }
 
   def interpret_LT_Thousand(group: String, skipZero: Boolean = false): String = {
-    println()
     group.length match {
       case 1 =>
         if (skipZero && group.toInt == 0) "" else dictionary("single")(group.toInt) // from 0 to 9
@@ -50,8 +49,10 @@ object EnglishTranslationEngine {
     }
   }
 
-  def pluralizeToken(num: String, token: String): String =
-    if (token.isEmpty || dictionary("single")(1) == num) token else s"${token}s"
+  def pluralizeToken(num: String, token: String): String = {
+    if (num.trim.isEmpty) ""
+    else if (token.isEmpty || dictionary("single")(1) == num) token else s"${token}s"
+  }
 }
 
 
