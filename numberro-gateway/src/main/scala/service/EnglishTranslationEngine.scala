@@ -67,7 +67,12 @@ class EnglishTranslationEngine extends Actor with ActorLogging {
     case (num: String) =>
       log.info(s"translating... $num")
       val tokens = tokenize(num.reverse.split("(?<=\\G...)").toList.map(_.reverse), 0, List())
-      sender() ! (tokens.foldLeft("") { (acc, pair) => acc + joinIfNotEmpty(pair._2, " ") + skipTokenForEmptyGroup(pair._2, pair._1) }).trim
+      val translation = tokens.foldLeft("") { (acc, pair) =>
+        acc + joinIfNotEmpty(pair._2, " ") +
+          skipTokenForEmptyGroup(pair._2, pair._1)
+      }
+      val capitalized = translation.trim.split(" ").zipWithIndex.map { case (s, index) => if (index == 0) s.capitalize else s }
+      sender() ! capitalized.mkString(" ")
   }
 }
 

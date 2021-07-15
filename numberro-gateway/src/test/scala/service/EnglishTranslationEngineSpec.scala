@@ -21,15 +21,15 @@ class EnglishTranslationEngineSpec()
     "translate simple number" in {
       val englishTranslationEngine = system.actorOf(Props[EnglishTranslationEngine])
       englishTranslationEngine ! "1"
-      expectMsg[String]("one")
+      expectMsg[String]("One")
     }
 
     "translate number with multiple zeros in the middle" in {
       val englishTranslationEngine = system.actorOf(Props[EnglishTranslationEngine])
       englishTranslationEngine ! "1000001"
-      expectMsg[String]("one million one")
+      expectMsg[String]("One million one")
       englishTranslationEngine ! "1000042001"
-      expectMsg[String]("one billion forty two thousand one")
+      expectMsg[String]("One billion forty two thousand one")
     }
   }
 
