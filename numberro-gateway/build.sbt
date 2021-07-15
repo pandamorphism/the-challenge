@@ -1,4 +1,4 @@
-import com.typesafe.sbt.packager.docker.Cmd
+
 
 enablePlugins(JavaAppPackaging, DockerPlugin)
 name := "numberro-gateway"
@@ -24,6 +24,7 @@ val AkkaVersion = "2.6.8"
 val AkkaHttpVersion = "10.2.4"
 val SlickVersion = "3.3.3"
 val postgresVersion = "42.2.2"
+val scalaTestVersion = "3.2.9"
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-actor-typed" % AkkaVersion,
   "com.typesafe.akka" %% "akka-stream" % AkkaVersion,
@@ -37,5 +38,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-cluster-tools" % AkkaVersion,
   "com.lightbend.akka" %% "akka-persistence-jdbc" % "4.0.0",
   "com.typesafe.slick" %% "slick" % SlickVersion,
-  "com.typesafe.slick" %% "slick-hikaricp" % SlickVersion
+  "com.typesafe.slick" %% "slick-hikaricp" % SlickVersion,
+  "com.typesafe.akka" %% "akka-testkit" % AkkaVersion % Test,
+  "org.scalatest" %% "scalatest" % scalaTestVersion,
 )

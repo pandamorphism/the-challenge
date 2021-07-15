@@ -49,9 +49,12 @@ object EnglishTranslationEngine {
     }
   }
 
-  def pluralizeToken(num: String, token: String): String = {
-    if (num.trim.isEmpty) ""
-    else if (token.isEmpty || dictionary("single")(1) == num) token else s"${token}s"
+  def skipTokenForEmptyGroup(num: String, token: String): String = {
+    if (num.trim.isEmpty) "" else token
+  }
+
+  def joinIfNotEmpty(num: String, separator: String): String = {
+    if (num.trim.isEmpty) "" else separator + num + separator
   }
 }
 
@@ -64,7 +67,7 @@ class EnglishTranslationEngine extends Actor with ActorLogging {
     case (num: String) =>
       log.info(s"translating... $num")
       val tokens = tokenize(num.reverse.split("(?<=\\G...)").toList.map(_.reverse), 0, List())
-      sender() ! (tokens.foldLeft("") { (acc, pair) => acc + " " + pair._2 + " " + pluralizeToken(pair._2, pair._1) }).trim
+      sender() ! (tokens.foldLeft("") { (acc, pair) => acc + joinIfNotEmpty(pair._2, " ") + skipTokenForEmptyGroup(pair._2, pair._1) }).trim
   }
 }
 
